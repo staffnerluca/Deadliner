@@ -6,6 +6,8 @@ import './App.css'
 
 
 const tasks = []
+const weekdays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+
 
 function NewTask({id}){
   const btnId = "btn"+id;
@@ -14,8 +16,8 @@ function NewTask({id}){
     <div className="divTask">
       <input className="inpName" placeholder={"Name"}></input> 
       <input className="inpAmount" placeholder={"Amount"} id={inpTotalAmoutnId}></input>
-      <input className="inpCheckbox" type="checkbox"></input> Only on work days 
-      <input type="checkbox"></input> The same every day 
+      <input className="inpCheckboxSameOnWorkdays" type="checkbox"></input> Only on work days 
+      <input className="inpCheckboxSameEveryDay" type="checkbox"></input> The same every day 
       <button id={btnId} onClick={clearLine}>Clear line</button>
       <br></br>
       Amount per day<br></br>
@@ -33,9 +35,51 @@ function NewTask({id}){
   )
 }
 
-function calculateDeadline(days, amount){
+function handleTickTheSameEveryDayOrOnlyOnWorkdays(event, id){
+  const btn = event.target;
+  const type = btn.className;
+  let onlyOnWorkdays = false;
+  if(type === "inpCheckboxSameOnWorkdays"){
+    onlyOnWorkdays = true;
+  }
+
+  const wholeDiv = document.getElementById("div"+id);
+  const inputs = wholeDiv.getElementsByTagName(input);
+  let num = 0;
+  for(let i = 0; i < inputs.length; i++){
+    let val = inputs[i].value;
+    let day = inputs[i].placeholder;
+    if(num === 0 && val !== undefined && weekdays.includes(day)){
+      num = inputs[i].value;
+      break;
+    }
+  }
+  fillAllAmountInputsWithTheSameValue(num, id);
 
 }
+
+
+//they are filled with the value of the first box that has a value
+function fillAllAmountInputsWithTheSameValue(value, id){
+  for(let i = 0; i < inputs.length; i++){
+  }
+}
+
+
+function calculateDeadline(days, amount, id){
+  let date = new Date();
+  let weekday = today.getDay();
+  const amountPerDay = getAmountsFromDayAmountInputsAndReturnArray(id)
+  let restAmount = amount;
+  while(restAmount > 0){
+    restAmount-=amoutnsPerDay[weekday];
+    weekday+=1
+    date.setDate(date.getDate+1)
+  }
+  console.log(date);
+  return date;
+}
+
 
 function getAmountsFromDayAmountInputsAndReturnArray(id){
   let amoutnsPerDay = {
@@ -65,8 +109,8 @@ function getAmountsFromDayAmountInputsAndReturnArray(id){
 function getAmount(id){
   const inpAmoutn = document.getElementById("inpTotalAmount"+id);
   return inpAmoutn.value;
-  
 }
+
 
 function clearLine(event){
   const btn = event.target;
@@ -76,9 +120,11 @@ function clearLine(event){
   console.log(tasks.length)
 }
 
+
 function App() {
   const [count, setCount] = useState(0)
   const [removed, setRemove] = useState(1)
+
 
   const handleNewTaskClick = () => {
     setCount(count+1);
@@ -86,6 +132,7 @@ function App() {
     tasks.push(<NewTask key={count} id={count}/>);
   }
   
+
   function RenderTasks(){
     return tasks;
   }
@@ -101,8 +148,11 @@ function App() {
       id = regExpForId[1]
     }
     const days = getAmountsFromDayAmountInputsAndReturnArray(id)
-    const deadLine = calculateDeadline(days, 100)
+    const deadLine = calculateDeadline(days, getAmount(id));
+    const parDeadline = document.getElementById("deadline");
+    parDeadline.textContent = "Deadline: "+date;
   }
+
 
   return (
     <div>
