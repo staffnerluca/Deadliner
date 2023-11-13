@@ -58,7 +58,7 @@ function handleTickTheSameEveryDayOrOnlyOnWorkdays(event, id){
 
 }
 
-
+s
 //they are filled with the value of the first box that has a value
 function fillAllAmountInputsWithTheSameValue(value, id){
   for(let i = 0; i < inputs.length; i++){
