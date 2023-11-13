@@ -41,6 +41,10 @@
   color: #888;
 }
 
-.inpUnit{
+.inpAmount{
   width: 50px;
+}
+
+.inpDayAmount{
+  width: 40px;
 }
