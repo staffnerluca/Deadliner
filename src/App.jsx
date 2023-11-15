@@ -12,6 +12,7 @@ const weekdays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 function NewTask({id}){
   const btnId = "btn"+id;
   const inpTotalAmoutnId = "inpTotalAmount"+id;
+  const pDeadlineId = "pDeadline"+id;
   return(
     <div className="divTask">
       <input className="inpName" placeholder={"Name"}></input> 
@@ -29,7 +30,7 @@ function NewTask({id}){
       <input className='inpDayAmount' placeholder='Sa'></input> 
       <input className='inpDayAmount' placeholder='Su'></input>
       <br></br>
-      <p className='deadLine'>Deadline: </p>
+      <p id={pDeadlineId} className='deadLine'>Deadline: </p>
       <br></br><br></br>
     </div>
   )
@@ -54,29 +55,35 @@ function handleTickTheSameEveryDayOrOnlyOnWorkdays(event, id){
       break;
     }
   }
-  fillAllAmountInputsWithTheSameValue(num, id);
+  fillAllAmountInputsWithTheSameValue(num, inputs);
 
 }
 
 s
 //they are filled with the value of the first box that has a value
-function fillAllAmountInputsWithTheSameValue(value, id){
+function fillAllAmountInputsWithTheSameValue(value, inputs){
   for(let i = 0; i < inputs.length; i++){
+    if(weekdays.includes(inputs[i])){
+      inputs[i].value = value;
+    }
+    console.log("Values inserted");
   }
 }
 
 
-function calculateDeadline(days, amount, id){
+function calculateDeadline(amount, id){
   let date = new Date();
   let weekday = today.getDay();
   const amountPerDay = getAmountsFromDayAmountInputsAndReturnArray(id)
   let restAmount = amount;
   while(restAmount > 0){
-    restAmount-=amoutnsPerDay[weekday];
+    restAmount-= amountPerDay[weekday];
     weekday+=1
     date.setDate(date.getDate+1)
   }
   console.log(date);
+  const resultLabel = document.getElementById("pDeadline"+id);
+  resultLabel.textContent("Deadline"+date.toString());
   return date;
 }
 
@@ -150,7 +157,7 @@ function App() {
     const days = getAmountsFromDayAmountInputsAndReturnArray(id)
     const deadLine = calculateDeadline(days, getAmount(id));
     const parDeadline = document.getElementById("deadline");
-    parDeadline.textContent = "Deadline: "+date;
+    parDeadline.textContent = "Deadline: "+deadLine;
   }
 
 
