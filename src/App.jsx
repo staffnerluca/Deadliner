@@ -1,11 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom';
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 
-const tasks = []
 const weekdays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
 
@@ -13,8 +12,11 @@ function NewTask({id}){
   const btnId = "btnClearline"+id;
   const inpTotalAmoutnId = "inpTotalAmount"+id;
   const pDeadlineId = "pDeadline"+id;
+  const taskID = "task"+id;
+  console.log("the ID of the task is: "+taskID);
+
   return(
-    <div className="divTask">
+    <div id={taskID} className="divTask">
       <input className="inpName" placeholder={"Name"}></input> 
       <input className="inpAmount" placeholder={"Amount"} id={inpTotalAmoutnId}></input>
       <input className="inpCheckboxSameOnWorkdays" type="checkbox"></input> Only on work days 
@@ -36,7 +38,12 @@ function NewTask({id}){
 }
 
 function testNewTask(id){
-  const newTask = document.getElementById(id);
+  console.log(id);
+  const tID = "task"+id
+  const newTask = document.getElementById(tID)
+  console.log(tID);
+  //const newTask = document.getElementById("task"+id);
+  console.log(newTask.id);
   const amount = newTask.getElementsByClassName(inpAmount);
   const amountID = amount.id;
   console.log("AmountID: "+amountID);
@@ -131,28 +138,29 @@ function getAmount(id){
 
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [removed, setRemove] = useState(1)
+  const [count, setCount] = useState(0);
+  const [removed, setRemove] = useState(0);
+  const [tasks, setTask] = useState([]);
 
 
   const handleNewTaskClick = () => {
     setCount(count+1);
-    console.log("Presed");
-    tasks.push(<NewTask key={count} id={count}/>);
-    testNewTask(count);
+    let taskCopy = tasks;
+    taskCopy.push(<NewTask key={count} id={count}/>);
+    setTask(taskCopy);
   }
+
 
   const clearLine = (id) => {
     setRemove(removed+1);
-    console.log("remove");
-    tasks.pop();
-    console.log("finished removing");
+    setTask(tasks.pop());
   }
   
 
   function RenderTasks(){
     return tasks;
   }
+
 
   function handleCaclDeadlineClick(event){
     const pressesButton = event.target;
@@ -169,7 +177,15 @@ function App() {
     const parDeadline = document.getElementById("deadline");
     parDeadline.textContent = "Deadline: "+deadLine;
   }
-  console.log("Hello");
+
+
+  useEffect(() => {
+    if(tasks.length !== 0){
+      testNewTask(count);
+    }
+
+  }, [count]);
+
 
   return (
     <div>
