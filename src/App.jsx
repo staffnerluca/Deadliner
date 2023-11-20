@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useLayoutEffect } from 'react'
 import ReactDOM from 'react-dom';
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -140,20 +140,22 @@ function getAmount(id){
 function App() {
   const [count, setCount] = useState(0);
   const [removed, setRemove] = useState(0);
-  const [tasks, setTask] = useState([]);
+  const [tasks, setTasks] = useState([]);
 
 
   const handleNewTaskClick = () => {
     setCount(count+1);
-    let taskCopy = tasks;
-    taskCopy.push(<NewTask key={count} id={count}/>);
-    setTask(taskCopy);
+    console.log("adding");
+    setTasks(odlT => [...odlT, <NewTask key={count} id={count} />], () => {
+      testNewTask(count)
+    });
   }
 
 
   const clearLine = (id) => {
     setRemove(removed+1);
-    setTask(tasks.pop());
+    let reduceTasks = tasks.pop();
+    setTask(recu);
   }
   
 
@@ -179,12 +181,15 @@ function App() {
   }
 
 
-  useEffect(() => {
-    if(tasks.length !== 0){
-      testNewTask(count);
-    }
+  useLayoutEffect(() => {
+    if (tasks.length !== 0) {
+      const lastTask = tasks[tasks.length - 1];
+      const taskId = lastTask.props.id;
 
-  }, [count]);
+      testNewTask(taskId);
+    }
+  }, [tasks]);
+
 
 
   return (
