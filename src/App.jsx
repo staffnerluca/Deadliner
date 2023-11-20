@@ -19,7 +19,6 @@ function NewTask({id}){
       <input className="inpAmount" placeholder={"Amount"} id={inpTotalAmoutnId}></input>
       <input className="inpCheckboxSameOnWorkdays" type="checkbox"></input> Only on work days 
       <input className="inpCheckboxSameEveryDay" type="checkbox"></input> The same every day 
-      <button id={btnId} className="btnClear" onClick={clearLine}>Clear line</button>
       <br></br>
       Amount per day<br></br>
       <input className='inpDayAmount' placeholder='Mo'></input> 
@@ -131,15 +130,6 @@ function getAmount(id){
 }
 
 
-function clearLine(event){
-  const btn = event.target;
-  const num = btn.id;
-  console.log(num);
-  tasks.splice(num, 1)
-  console.log(tasks.length)
-}
-
-
 function App() {
   const [count, setCount] = useState(0)
   const [removed, setRemove] = useState(1)
@@ -150,6 +140,13 @@ function App() {
     console.log("Presed");
     tasks.push(<NewTask key={count} id={count}/>);
     testNewTask(count);
+  }
+
+  const clearLine = (id) => {
+    setRemove(removed+1);
+    console.log("remove");
+    tasks.pop();
+    console.log("finished removing");
   }
   
 
@@ -177,7 +174,8 @@ function App() {
   return (
     <div>
       <h1>Deadliner</h1>
-      <button onClick={handleNewTaskClick}>New Task</button>
+      <button onClick={handleNewTaskClick}>Add</button>
+      <button className="btnClear" onClick={clearLine}>Remove</button>
       <button onClick={handleCaclDeadlineClick}>Caluclate Deadlines</button>
       <br></br>
       <br></br>
