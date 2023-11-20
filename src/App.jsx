@@ -10,7 +10,7 @@ const weekdays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
 
 function NewTask({id}){
-  const btnId = "btn"+id;
+  const btnId = "btnClearline"+id;
   const inpTotalAmoutnId = "inpTotalAmount"+id;
   const pDeadlineId = "pDeadline"+id;
   return(
@@ -19,7 +19,7 @@ function NewTask({id}){
       <input className="inpAmount" placeholder={"Amount"} id={inpTotalAmoutnId}></input>
       <input className="inpCheckboxSameOnWorkdays" type="checkbox"></input> Only on work days 
       <input className="inpCheckboxSameEveryDay" type="checkbox"></input> The same every day 
-      <button id={btnId} onClick={clearLine}>Clear line</button>
+      <button id={btnId} className="btnClear" onClick={clearLine}>Clear line</button>
       <br></br>
       Amount per day<br></br>
       <input className='inpDayAmount' placeholder='Mo'></input> 
@@ -35,6 +35,19 @@ function NewTask({id}){
     </div>
   )
 }
+
+function testNewTask(id){
+  const newTask = document.getElementById(id);
+  const amount = newTask.getElementsByClassName(inpAmount);
+  const amountID = amount.id;
+  console.log("AmountID: "+amountID);
+  const bClear = newTask.getElementsByClassName("btnClear");
+  const bCId = bClear.id;
+  console.log(bCId);
+  const deadline = newTask.getElementsByClassName("deadLine");
+  const dID = deadline.id;
+}
+
 
 function handleTickTheSameEveryDayOrOnlyOnWorkdays(event, id){
   const btn = event.target;
@@ -56,10 +69,9 @@ function handleTickTheSameEveryDayOrOnlyOnWorkdays(event, id){
     }
   }
   fillAllAmountInputsWithTheSameValue(num, inputs);
-
 }
 
-s
+
 //they are filled with the value of the first box that has a value
 function fillAllAmountInputsWithTheSameValue(value, inputs){
   for(let i = 0; i < inputs.length; i++){
@@ -137,6 +149,7 @@ function App() {
     setCount(count+1);
     console.log("Presed");
     tasks.push(<NewTask key={count} id={count}/>);
+    testNewTask(count);
   }
   
 
@@ -159,7 +172,7 @@ function App() {
     const parDeadline = document.getElementById("deadline");
     parDeadline.textContent = "Deadline: "+deadLine;
   }
-
+  console.log("Hello");
 
   return (
     <div>
