@@ -37,23 +37,6 @@ function NewTask({id}){
   )
 }
 
-function testNewTask(id){
-  console.log(id);
-  const tID = "task"+id
-  const newTask = document.getElementById(tID)
-  console.log(tID);
-  //const newTask = document.getElementById("task"+id);
-  console.log(newTask.id);
-  const amount = newTask.getElementsByClassName(inpAmount);
-  const amountID = amount.id;
-  console.log("AmountID: "+amountID);
-  const bClear = newTask.getElementsByClassName("btnClear");
-  const bCId = bClear.id;
-  console.log(bCId);
-  const deadline = newTask.getElementsByClassName("deadLine");
-  const dID = deadline.id;
-}
-
 
 function handleTickTheSameEveryDayOrOnlyOnWorkdays(event, id){
   const btn = event.target;
@@ -179,16 +162,6 @@ function App() {
     const parDeadline = document.getElementById("deadline");
     parDeadline.textContent = "Deadline: "+deadLine;
   }
-
-
-  useLayoutEffect(() => {
-    if (tasks.length !== 0) {
-      const lastTask = tasks[tasks.length - 1];
-      const taskId = lastTask.props.id;
-
-      testNewTask(taskId);
-    }
-  }, [tasks]);
 
 
 
