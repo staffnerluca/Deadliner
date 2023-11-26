@@ -10,7 +10,15 @@ function App() {
   const [count, setCount] = useState(0);
   const [removed, setRemove] = useState(0);
   const [tasks, setTasks] = useState([]);
-  const [amountPerDay, setAmountPerDay] = useState(0);
+  const [amountPerDay, setAmountPerDay] = useState({
+    "Mo": 0,
+    "Tu": 0,
+    "We": 0,
+    "Th": 0,
+    "Fr": 0,
+    "Sa": 0,
+    "So": 0
+  });
 
   function NewTask({id}){
     const btnId = "btnClearline"+id;
@@ -27,13 +35,13 @@ function App() {
         <input className="inpCheckboxSameEveryDay" type="checkbox"></input> The same every day 
         <br></br>
         Amount per day<br></br>
-        <input className='inpDayAmount' placeholder='Mo'></input> 
-        <input className='inpDayAmount' placeholder='Tu'></input> 
-        <input className='inpDayAmount' placeholder='We'></input> 
-        <input className='inpDayAmount' placeholder='Th'></input>
-        <input className='inpDayAmount' placeholder='Fr'></input>
-        <input className='inpDayAmount' placeholder='Sa'></input> 
-        <input className='inpDayAmount' placeholder='Su'></input>
+        <input className='inpDayAmount' value={amountPerDay["Mo"]} placeholder='Mo' onChange={onInpAmountChange}></input> 
+        <input className='inpDayAmount' value={amountPerDay["Tu"]} placeholder='Tu' onChange={onInpAmountChange}></input> 
+        <input className='inpDayAmount' value={amountPerDay["We"]} placeholder='We' onChange={onInpAmountChange}></input> 
+        <input className='inpDayAmount' value={amountPerDay["Th"]} placeholder='Th' onChange={onInpAmountChange}></input>
+        <input className='inpDayAmount' value={amountPerDay["Fr"]} placeholder='Fr' onChange={onInpAmountChange}></input>
+        <input className='inpDayAmount' value={amountPerDay["Sa"]} placeholder='Sa' onChange={onInpAmountChange}></input> 
+        <input className='inpDayAmount' value={amountPerDay["So"]} placeholder='Su' onChange={onInpAmountChange}></input>
         <br></br>
         <p id={pDeadlineId} className='deadLine'>Deadline: </p>
         <br></br><br></br>
@@ -41,6 +49,32 @@ function App() {
     )
   }
   
+  function onInpAmountChange(){
+    const onlyOnWorkdays = document.getElementById("inpCheckboxSameOnWorkdays");
+    const theSameEveryDay = document.getElementById("inpCheckboxSameEveryDay");
+    if(onlyOnWorkdays || theSameEveryDay){
+      let tempDic = amoutnsPerDay;
+      if(onlyOnWorkdays){
+        delete tempDic["Sa"];
+        delete tempDic["So"];
+      }
+  
+      let max = 0;
+      Object.keys(tempDic).forEach((key) => {
+        let val = tempDic[key];
+        if(val > max){
+          max = val;
+        }
+      })
+      console.log(max)
+  
+      Object.keys(tempDic).forEach((key) => {
+        tempDic[key] = max;
+      })
+    }
+    setAmountPerDay(tempDic);
+  }
+    
   function handleTickTheSameEveryDayOrOnlyOnWorkdays(event, id){
     const btn = event.target;
     const type = btn.className;
