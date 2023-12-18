@@ -12,6 +12,10 @@ export function Task(id){
         "So": 0
       });
 
+    const [totalAmount, setTotalAmount] = useState(0);
+
+    //starting day
+
     function onInpAmountChange(){
         changeInputFieldValue()
     }
@@ -24,6 +28,10 @@ export function Task(id){
             console.log(inp.value);
             inp.value = amountPerDay(inp.placeholder);
         });
+    }
+
+    function calculateDeadline(){
+        
     }
 
     const totalAmountId = "inpTotalAmount"+id;
