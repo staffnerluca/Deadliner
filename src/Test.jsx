@@ -5,7 +5,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 
-function App() {
+function Test() {
   const weekdays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
   const [count, setCount] = useState(0);
   const [removed, setRemove] = useState(0);
@@ -219,4 +219,4 @@ function App() {
   )
 }
 
-export default App
+export default Test

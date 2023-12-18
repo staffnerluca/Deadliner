@@ -1,4 +1,7 @@
-function Task(){
+import { useEffect, useState, useLayoutEffect } from 'react'
+import ReactDOM from 'react-dom'; 
+
+export function Task(id){
     const [amountPerDay, setAmountPerDay] = useState({
         "Mo": 0,
         "Tu": 0,
@@ -14,21 +17,23 @@ function Task(){
     }
 
     function changeInputFieldValue(){
-        const divTask = document.getElementById("divTask");
+        const divTask = document.getElementsByClassName("divTask");
         const amountInputs = divTask.getElementsByClassName("inpDayAmount");
         const onlyOnWorkdays = divTask.getElemen
-        if()
         amountInputs.array.forEach(inp => {
             console.log(inp.value);
             inp.value = amountPerDay(inp.placeholder);
         });
     }
 
+    const totalAmountId = "inpTotalAmount"+id;
+    const deadLineId = "pDeadline"+id;
+
     return(
         <div className="divTask">
-            <div id={taskID} className="divTask">
+            <div id={id} className="divTask">
                 <input className="inpName" placeholder={"Name"}></input> 
-                <input className="inpAmount" placeholder={"Amount"} id={inpTotalAmoutnId}></input>
+                <input className="inpAmount" placeholder={"Amount"} id={totalAmountId}></input>
                 <input className="inpCheckboxSameOnWorkdays" type="checkbox"></input> Only on work days 
                 <input className="inpCheckboxSameEveryDay" type="checkbox"></input> The same every day 
                 <br></br>
@@ -41,12 +46,9 @@ function Task(){
                 <input className='inpDayAmount' placeholder="Sa" onChange={onInpAmountChange}></input> 
                 <input className='inpDayAmount' placeholder="Su" onChange={onInpAmountChange}></input>
                 <br></br>
-                <p id={pDeadlineId} className='deadLine'>Deadline: </p>
+                <p id={deadLineId} className='deadLine'>Deadline: </p>
                 <br></br><br></br>
             </div>
         </div>
-
     )
 }
-
-export default Task;
