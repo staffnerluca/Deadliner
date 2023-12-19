@@ -14,6 +14,8 @@ export function Task(id){
 
     const [totalAmount, setTotalAmount] = useState(0);
 
+    const [deadLine, setDeadline] = useState(0);
+
     //starting day
 
     function onInpAmountChange(){
@@ -31,7 +33,33 @@ export function Task(id){
     }
 
     function calculateDeadline(){
+        let date = new Date();
+        let weekday = date.getDate();
         
+        //Su should be 6 and not 0
+        if(weekday === 0){
+            weekday = 7;
+        }
+        weekday -= 1;
+
+        const amountsList = Object.values(amountPerDay);
+        let amountLeft = totalAmount;
+        let index = weekday;
+        let daysNeeded = 0;
+        while(amountLeft > 0){
+            amountLeft -= amountsList[index];
+            daysNeeded += 1;
+            if(index+1===7){
+                index=0
+            }
+            else{
+                index+=1
+            }
+        }
+
+        let deadLineDate = new Date();
+        deadLineDate.setDate(date.getDate()+daysNeeded);
+        return deadLineDate.toDateString();
     }
 
     const totalAmountId = "inpTotalAmount"+id;
