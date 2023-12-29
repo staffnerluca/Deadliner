@@ -14,22 +14,53 @@ export function Task(id){
 
     const [totalAmount, setTotalAmount] = useState(0);
 
-    const [deadLine, setDeadline] = useState(0);
+    const [deadLine, setDeadline] = useState("");
 
     //starting day
+
+    function checkIfNumber(num){
+        const n = parseFloat(num);
+        return !isNaN(n);
+    }
 
     function onInpAmountChange(){
         changeInputFieldValue()
     }
 
+
     function changeInputFieldValue(){
+        //TODO implement this otherwise nothing working
         const divTask = document.getElementsByClassName("divTask");
-        const amountInputs = divTask.getElementsByClassName("inpDayAmount");
-        const onlyOnWorkdays = divTask.getElemen
+        const amountInputs = Array.from(divTask.getElementsByClassName("inpDayAmount"));
+        const checkOnlyOnWoorkdays = divTask.getElementsByClassName("inpCheckboxSameOnWorkdays");
+        const checkEveryDayTheSame = divTask.getElementsByClassName("inpCheckboxSameEveryDay");
+        if(checkEveryDayTheSame.checked){
+            let max = 0;
+            amountInputs.array.forEach(inp => {
+                console.log(inp.value);
+                if(inp.value != "")
+                if(inp.value > max){
+                    max = inp.value;
+                }
+            })
+        }
+
         amountInputs.array.forEach(inp => {
             console.log(inp.value);
-            inp.value = amountPerDay(inp.placeholder);
+            setAmountPerDay(prev => ({
+                ...prev,
+                [inp.placeholder]: inp.value
+            }))
         });
+
+        if(checkOnlyOnWoorkdays.checked){
+            setAmountPerDay(prev => ({
+                ...prev,
+                "Sa": 0,
+                "So": 0
+            }))
+        }
+
     }
 
     function calculateDeadline(){
@@ -59,7 +90,7 @@ export function Task(id){
 
         let deadLineDate = new Date();
         deadLineDate.setDate(date.getDate()+daysNeeded);
-        return deadLineDate.toDateString();
+        setDeadline(deadLineDate.toDateString());
     }
 
     const totalAmountId = "inpTotalAmount"+id;
@@ -82,8 +113,10 @@ export function Task(id){
                 <input className='inpDayAmount' placeholder="Sa" onChange={onInpAmountChange}></input> 
                 <input className='inpDayAmount' placeholder="Su" onChange={onInpAmountChange}></input>
                 <br></br>
-                <p id={deadLineId} className='deadLine'>Deadline: </p>
-                <br></br><br></br>
+                <p id={deadLineId} className='deadLine'>Deadline: {deadLine}</p>
+                <br></br>
+                <button onClick={calculateDeadline}>Calculate Deadline</button>
+                
             </div>
         </div>
     )
