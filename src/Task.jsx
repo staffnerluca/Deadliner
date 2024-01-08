@@ -23,6 +23,7 @@ export function Task(id){
         return !isNaN(n);
     }
 
+    
     function onInpAmountChange(){
         changeInputFieldValue()
     }
