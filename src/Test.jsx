@@ -1,36 +1,72 @@
 import { useState } from "react"
 
 export function Test(){
+    const [amountPerDay, setAmountPerDay] = useState({
+        "Mo": 0,
+        "Tu": 0,
+        "We": 0,
+        "Th": 0,
+        "Fr": 0,
+        "Sa": 0,
+        "So": 0
+      });
+    function onInpAmountChange(changedByUser){
+        console.log("changed input");
+    }
 
-    const MultipleInputs = () => {
-      // Initialize state for input values
-      const [inputValues, setInputValues] = useState(['', '', '', '', '']);
-    
-      // Handle input change
-      const handleInputChange = (index, value) => {
-        // Update the value of the changed input
-        setInputValues((prevValues) => {
-          const newValues = [...prevValues];
-          newValues[index] = value;
-          return newValues;
-        });
-      };
-    
-      return (
+    function checkIfUserChanged(){
+
+    }
+
+    function changeInputs(){
+        const ch = document.getElementById("changeAll");
+        if(ch.checked){
+            const inps = document.getElementsByTagName("input");
+            
+        }
+    }
+
+    return(
         <div>
-          {/* Render 5 input fields */}
-          {inputValues.map((value, index) => (
+            <p>All: </p><input type="checkbox" id="changeAll"/>
             <input
-              key={index}
-              type="text"
-              value={value}
-              onChange={(e) => handleInputChange(index, e.target.value)}
+                className='inpDayAmount'
+                placeholder="Mo"
+                onChange={(event) => onInpAmountChange(event)}
             />
-          ))}
+            <input
+                className='inpDayAmount'
+                placeholder="Tu"
+                onChange={(event) => onInpAmountChange(event)}
+            />
+            <input
+                className='inpDayAmount'
+                placeholder="We"
+                onChange={(event) => onInpAmountChange(event)}
+            />
+            <input
+                className='inpDayAmount'
+                placeholder="Th"
+                onChange={(event) => onInpAmountChange(event)}
+            />
+            <input
+                className='inpDayAmount'
+                placeholder="Fr"
+                onChange={(event) => onInpAmountChange(event)}
+            />
+            <input
+                className='inpDayAmount'
+                placeholder="Sa"
+                onChange={(event) => onInpAmountChange(event)}
+            />
+            <input
+                className='inpDayAmount'
+                placeholder="Su"
+                onChange={(event) => onInpAmountChange(event)}
+            />
         </div>
-      );
-    };    
-}
+    )
+}    
     /*
     const inputValues = useState([0]*7)
     function changeAmounts(){
