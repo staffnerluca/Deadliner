@@ -25,8 +25,8 @@ export function Task(id){
 
     
     function onInpAmountChange(event, name){
-        const onlyOnWor = true;
-        const theSameEveryDay = true;
+        const onlyOnWor = document.querySelector(".inpCheckboxSameOnWorkdays").checked;
+        const theSameEveryDay = document.querySelector(".inpCheckboxSameEveryDay").checked;
         let di = amountPerDay;
         const val = event.target.value;
         const keys = Object.keys(di);
@@ -37,9 +37,9 @@ export function Task(id){
             }
         }
         else if(onlyOnWor){
-            if(name !=="Sa" && name !== "So"){
+            if(name !=="Sa" && name !== "Su"){
                 for(let key of keys){
-                    if(key !== "Sa" && key !== "So"){
+                    if(key !== "Sa" && key !== "Su"){
                         di[key] = val;
                         console.log(di)
                     }
@@ -48,8 +48,6 @@ export function Task(id){
         }
         else{di[name] = val}
         setAmountPerDay(di);
-        console.log(di)
-        console.log(amountPerDay)
         changeInputValues();
     }
 
@@ -57,10 +55,6 @@ export function Task(id){
     function changeInputValues(){
         const inps = document.getElementsByClassName("inpDayAmount");
         for(let inp of inps){
-            if(inp.value === ""){
-                console.log("empty");
-
-            }
             inp.value = amountPerDay[inp.placeholder];
         }
     }
