@@ -18,8 +18,6 @@ export function Task(id){
 
     //starting day
 
-    const cDref = useRef();
-
     function checkIfNumber(num){
         const n = parseFloat(num);
         return !isNaN(n);
@@ -31,75 +29,73 @@ export function Task(id){
     }
 
 
-    function changeInputFieldValue(){
-        //TODO implement this otherwise nothing working
-        const divTask = document.getElementsByClassName("divTask");
-        const amountInputs = Array.from(divTask.getElementsByClassName("inpDayAmount"));
-        const checkOnlyOnWoorkdays = divTask.getElementsByClassName("inpCheckboxSameOnWorkdays");
-        const checkEveryDayTheSame = divTask.getElementsByClassName("inpCheckboxSameEveryDay");
-        if(checkEveryDayTheSame.checked){
-            let max = 0;
-            amountInputs.array.forEach(inp => {
-                console.log(inp.value);
-                if(inp.value != "")
-                if(inp.value > max){
-                    max = inp.value;
-                }
-            })
-        }
-
-        amountInputs.array.forEach(inp => {
-            console.log(inp.value);
+    function changeInputFieldValue() {
+        const amountInputs = Array.from(document.getElementsByClassName("inpDayAmount"));
+        const checkOnlyOnWoorkdays = document.getElementsByClassName("inpCheckboxSameOnWorkdays")[0];
+        const checkEveryDayTheSame = document.getElementsByClassName("inpCheckboxSameEveryDay")[0];
+      
+        if (checkEveryDayTheSame.checked) {
+          let max = 0;
+          amountInputs.forEach(inp => {
+            if (inp.value !== "") {
+              if (inp.value > max) {
+                max = inp.value;
+              }
+            }
+          });
+      
+          amountInputs.forEach(inp => {
             setAmountPerDay(prev => ({
-                ...prev,
-                [inp.placeholder]: inp.value
-            }))
-        });
-
-        if(checkOnlyOnWoorkdays.checked){
+              ...prev,
+              [inp.placeholder]: max
+            }));
+          });
+        } else {
+          amountInputs.forEach(inp => {
             setAmountPerDay(prev => ({
-                ...prev,
-                "Sa": 0,
-                "So": 0
-            }))
+              ...prev,
+              [inp.placeholder]: inp.value
+            }));
+          });
         }
+      
+        if (checkOnlyOnWoorkdays.checked) {
+          setAmountPerDay(prev => ({
+            ...prev,
+            "Sa": 0,
+            "So": 0
+          }));
+        }
+      }
 
-    }
-
-    function calculateDeadline(){
-        alert("Calculating a deadline")
+      
+    function calculateDeadline() {
+        alert("Calculating a deadline");
         let date = new Date();
-        let weekday = date.getDate();
-        
-        //Su should be 6 and not 0
-        if(weekday === 0){
-            weekday = 7;
+        let weekday = date.getDay();
+      
+        if (weekday === 0) {
+          weekday = 7;
         }
-        weekday -= 1;
-
+      
         const amountsList = Object.values(amountPerDay);
         let amountLeft = totalAmount;
-        let index = weekday;
+        let index = weekday - 1;
         let daysNeeded = 0;
-        while(amountLeft > 0){
-            amountLeft -= amountsList[index];
-            daysNeeded += 1;
-            if(index+1===7){
-                index=0
-            }
-            else{
-                index+=1
-            }
+      
+        while (amountLeft > 0) {
+          amountLeft -= amountsList[index];
+          daysNeeded += 1;
+      
+          index = (index + 1) % 7;
         }
-
+      
         let deadLineDate = new Date();
-        deadLineDate.setDate(date.getDate()+daysNeeded);
+        deadLineDate.setDate(date.getDate() + daysNeeded);
         setDeadline(deadLineDate.toDateString());
     }
-
     const totalAmountId = "inpTotalAmount"+id;
     const deadLineId = "pDeadline"+id;
-    cDref.current = calculateDeadline;
 
     return(
         <div className="divTask">

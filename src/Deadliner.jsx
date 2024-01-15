@@ -24,7 +24,8 @@ export function Deadliner(){
     }
 
     function calculateAllDeadlines(){
-        taskList.forEach(task => task.current.calculateDeadline())
+        //TODO not working jet
+        taskList.forEach(task => console.log(typeof task.calculateDeadline))
     }
     
     return(
