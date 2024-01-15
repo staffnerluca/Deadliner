@@ -24,12 +24,39 @@ export function Task(id){
     }
 
     
-    function onInpAmountChange(){
-        changeInputFieldValue()
+    function onInpAmountChange(event, name){
+        const onlyOnWor = true;
+        const theSameEveryDay = true;
+        let di = amountPerDay;
+        const val = event.target.value;
+        const keys = Object.keys(di);
+        if(theSameEveryDay){
+            for(let key in keys){
+                di[key] = val;
+            }
+        }
+        else if(onlyOnWor){
+            if(name !=="Sa" && name !== "So"){
+                for(let key in keys){
+                    if(key !== "Sa" && key !== "So"){
+                        di[key] = val;
+                    }
+                }
+            }
+        }
+        else{di[name] = val}
+        setAmountPerDay(di);
+        
+        changeInputs();
     }
 
 
-    function changeInputFieldValue() {
+    function changeInputs(){
+        
+    }
+
+
+    /*function changeInputFieldValue() {
         const amountInputs = Array.from(document.getElementsByClassName("inpDayAmount"));
         const checkOnlyOnWoorkdays = document.getElementsByClassName("inpCheckboxSameOnWorkdays")[0];
         const checkEveryDayTheSame = document.getElementsByClassName("inpCheckboxSameEveryDay")[0];
@@ -66,9 +93,9 @@ export function Task(id){
             "So": 0
           }));
         }
-      }
-
-      
+      }*/
+    
+          
     function calculateDeadline() {
         alert("Calculating a deadline");
         let date = new Date();
@@ -106,13 +133,13 @@ export function Task(id){
                 <input className="inpCheckboxSameEveryDay" type="checkbox"></input> The same every day 
                 <br></br>
                 Amount per day<br></br>
-                <input className='inpDayAmount' placeholder="Mo" onChange={onInpAmountChange}></input> 
-                <input className='inpDayAmount' placeholder="Tu" onChange={onInpAmountChange}></input> 
-                <input className='inpDayAmount' placeholder="We" onChange={onInpAmountChange}></input> 
-                <input className='inpDayAmount' placeholder="Th" onChange={onInpAmountChange}></input>
-                <input className='inpDayAmount' placeholder="Fr" onChange={onInpAmountChange}></input>
-                <input className='inpDayAmount' placeholder="Sa" onChange={onInpAmountChange}></input> 
-                <input className='inpDayAmount' placeholder="Su" onChange={onInpAmountChange}></input>
+                <input className='inpDayAmount' placeholder="Mo" onChange={e => onInpAmountChange(e, "Mo")}></input> 
+                <input className='inpDayAmount' placeholder="Tu" onChange={e => onInpAmountChange(e, "Tu")}></input> 
+                <input className='inpDayAmount' placeholder="We" onChange={e => onInpAmountChange(e, "We")}></input> 
+                <input className='inpDayAmount' placeholder="Th" onChange={e => onInpAmountChange(e, "Th")}></input>
+                <input className='inpDayAmount' placeholder="Fr" onChange={e => onInpAmountChange(e, "Fr")}></input>
+                <input className='inpDayAmount' placeholder="Sa" onChange={e => onInpAmountChange(e, "Sa")}></input> 
+                <input className='inpDayAmount' placeholder="Su" onChange={e => onInpAmountChange(e, "So")}></input>
                 <br></br>
                 <p id={deadLineId} className='deadLine'>Deadline: {deadLine}</p>
                 <br></br>
