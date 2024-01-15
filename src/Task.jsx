@@ -9,7 +9,7 @@ export function Task(id){
         "Th": 0,
         "Fr": 0,
         "Sa": 0,
-        "So": 0
+        "Su": 0
       });
 
     const [totalAmount, setTotalAmount] = useState(0);
@@ -30,29 +30,39 @@ export function Task(id){
         let di = amountPerDay;
         const val = event.target.value;
         const keys = Object.keys(di);
+        console.log(keys)
         if(theSameEveryDay){
-            for(let key in keys){
+            for(let key of keys){
                 di[key] = val;
             }
         }
         else if(onlyOnWor){
             if(name !=="Sa" && name !== "So"){
-                for(let key in keys){
+                for(let key of keys){
                     if(key !== "Sa" && key !== "So"){
                         di[key] = val;
+                        console.log(di)
                     }
                 }
             }
         }
         else{di[name] = val}
         setAmountPerDay(di);
-        
-        changeInputs();
+        console.log(di)
+        console.log(amountPerDay)
+        changeInputValues();
     }
 
 
-    function changeInputs(){
-        
+    function changeInputValues(){
+        const inps = document.getElementsByClassName("inpDayAmount");
+        for(let inp of inps){
+            if(inp.value === ""){
+                console.log("empty");
+
+            }
+            inp.value = amountPerDay[inp.placeholder];
+        }
     }
 
 
