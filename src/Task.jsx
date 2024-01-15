@@ -1,4 +1,4 @@
-import { useEffect, useState, useLayoutEffect } from 'react'
+import { useEffect, useState, useLayoutEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'; 
 
 export function Task(id){
@@ -17,6 +17,8 @@ export function Task(id){
     const [deadLine, setDeadline] = useState("");
 
     //starting day
+
+    const cDref = useRef();
 
     function checkIfNumber(num){
         const n = parseFloat(num);
@@ -65,6 +67,7 @@ export function Task(id){
     }
 
     function calculateDeadline(){
+        alert("Calculating a deadline")
         let date = new Date();
         let weekday = date.getDate();
         
@@ -96,6 +99,7 @@ export function Task(id){
 
     const totalAmountId = "inpTotalAmount"+id;
     const deadLineId = "pDeadline"+id;
+    cDref.current = calculateDeadline;
 
     return(
         <div className="divTask">
