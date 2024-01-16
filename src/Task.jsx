@@ -58,7 +58,7 @@ export function Task(id){
             inp.value = amountPerDay[inp.placeholder];
         }
     }
-
+    
 
     /*function changeInputFieldValue() {
         const amountInputs = Array.from(document.getElementsByClassName("inpDayAmount"));
@@ -101,25 +101,29 @@ export function Task(id){
     
           
     function calculateDeadline() {
-        alert("Calculating a deadline");
         let date = new Date();
         let weekday = date.getDay();
-      
+
+        const inpTotalAmount = document.getElementById("inpTotalAmount"+id);
+        const amount = inpTotalAmount.value;
         if (weekday === 0) {
           weekday = 7;
         }
       
         const amountsList = Object.values(amountPerDay);
-        let amountLeft = totalAmount;
+        let amountLeft = amount;
+        alert(amount)
         let index = weekday - 1;
         let daysNeeded = 0;
-      
         while (amountLeft > 0) {
           amountLeft -= amountsList[index];
           daysNeeded += 1;
-      
-          index = (index + 1) % 7;
+          index+=1
+          if(index===7){
+            index = 0
+          }
         }
+        alert(daysNeeded)
       
         let deadLineDate = new Date();
         deadLineDate.setDate(date.getDate() + daysNeeded);
