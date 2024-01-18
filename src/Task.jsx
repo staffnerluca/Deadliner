@@ -150,8 +150,7 @@ export function Task(id){
                 <input className='inpDayAmount' placeholder="Su" onChange={e => onInpAmountChange(e, "So")}></input>
                 <br></br>
                 <p id={deadLineId} className='deadLine'>Deadline: {deadLine}</p>
-                <br></br>
-                <button onClick={calculateDeadline}>Calculate Deadline</button>
+                <button onClick={calculateDeadline}>Calculate Deadline</button><br></br>
                 
             </div>
         </div>

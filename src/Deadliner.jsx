@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {Task} from "./Task"
+import "./Deadliner.css"
 
 export function Deadliner(){
     const [taskList, setTaskList] = useState([])
@@ -15,6 +16,7 @@ export function Deadliner(){
         console.log("Removed");
     }
 
+
     function RenderTaskList(){
         return(
             <div>
@@ -23,20 +25,24 @@ export function Deadliner(){
         )
     }
 
+
     function calculateAllDeadlines(){
         //TODO not working jet
         taskList.forEach(task => console.log(typeof task.calculateDeadline))
     }
     
-    return(
-            <div style={{textAlign: "center"}}>
-                <h1>Deadliner</h1>
-                <button onClick={addTask}>+</button>
-                <button onClick={removeTask}>-</button>
 
-                {RenderTaskList()}
-
-                <button onClick={calculateAllDeadlines}>Calculate all deadlines</button>
-            </div>
-    )
+    return (
+        <div className="container-fluid d-flex align-items-center justify-content-center vh-100">
+          <div>
+            <h1>Deadliner</h1>
+            <button onClick={addTask}>+</button>
+            <button onClick={removeTask}>-</button>
+      
+            {RenderTaskList()}
+      
+            <button onClick={calculateAllDeadlines}>Calculate all deadlines</button>
+          </div>
+        </div>
+      );
 }

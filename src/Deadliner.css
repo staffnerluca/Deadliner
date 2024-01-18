@@ -1,0 +1,10 @@
+.container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container-fluid > div{
+    text-align: center;
+}
