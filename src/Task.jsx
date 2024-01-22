@@ -20,7 +20,7 @@ export function Task({id}){
         const theSameEveryDay = myDiv.querySelector(".inpCheckboxSameEveryDay").checked;
         let diAmount = amountPerDay;
         const val = event.target.value;
-        const amountKeys = Object.keys(di);
+        const amountKeys = Object.keys(diAmount);
         if(theSameEveryDay){
             for(let key of amountKeys){
                 diAmount[key] = val;
@@ -28,7 +28,7 @@ export function Task({id}){
         }
         else if(onlyOnWork){
             if(name !=="Sa" && name !== "Su"){
-                for(let key of keys){
+                for(let key of amountKeys){
                     if(key !== "Sa" && key !== "Su"){
                         diAmount[key] = val;
                     }
@@ -85,7 +85,7 @@ export function Task({id}){
               <input className="inpName" placeholder={"Name"}></input>
               <input className="inpAmount" placeholder={"Amount"} id={totalAmountId}></input>
               <input className="inpCheckboxSameOnWorkdays" type="checkbox"></input> Only on work days 
-              <input className="inpCheckboxSameEveryDay" type="checkbox"></input> The same every day 
+              <input className="inpCheckboxSameEveryDay" type="checkbox"></input> The same every day  
               <br></br>
               Amount per day<br></br>
               <input className='inpDayAmount' placeholder="Mo" onChange={e => onInpAmountChange(e, "Mo")}></input> 
@@ -96,8 +96,8 @@ export function Task({id}){
               <input className='inpDayAmount' placeholder="Sa" onChange={e => onInpAmountChange(e, "Sa")}></input> 
               <input className='inpDayAmount' placeholder="Su" onChange={e => onInpAmountChange(e, "So")}></input>
               <br></br>
-              <p id={deadLineId} className='deadLine'>Deadline: {deadLine}</p>
-              <button onClick={calculateDeadline}>Calculate Deadline</button><br></br><br></br>  
+              <center><p id={deadLineId} className='deadLine'>Deadline: {deadLine}</p>
+              <button onClick={calculateDeadline}>Calculate Deadline</button><br></br><br></br></center>  
           </div>
     )
 }

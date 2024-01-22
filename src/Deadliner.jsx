@@ -44,7 +44,7 @@ export function Deadliner(){
       
             {RenderTaskList()}
             <br></br>
-            <button onClick={calculateAllDeadlines}>Calculate all deadlines</button>
+            <center><button onClick={calculateAllDeadlines}>Calculate all deadlines</button></center>
           </div>
         </div>
       );
