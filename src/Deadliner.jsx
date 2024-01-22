@@ -5,6 +5,8 @@ import "./Deadliner.css"
 export function Deadliner(){
     const [taskList, setTaskList] = useState([])
     let counter = 0
+    
+    
     function addTask(){
         console.log("added");
         setTaskList(prev => [...prev, <Task key={taskList.length} />]);
@@ -13,7 +15,7 @@ export function Deadliner(){
 
 
     function removeTask(){
-        console.log("Removed");
+        setTaskList(l => l.slice(0, -1));
     }
 
 
@@ -40,7 +42,7 @@ export function Deadliner(){
             <button onClick={removeTask}>-</button>
       
             {RenderTaskList()}
-      
+            <br></br>
             <button onClick={calculateAllDeadlines}>Calculate all deadlines</button>
           </div>
         </div>
