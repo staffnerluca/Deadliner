@@ -1,7 +1,6 @@
 import { useEffect, useState, useLayoutEffect, useRef } from 'react'
-import ReactDOM from 'react-dom'; 
 
-export function Task(id){
+export function Task({id}){
     const [amountPerDay, setAmountPerDay] = useState({
         "Mo": 0,
         "Tu": 0,
@@ -12,21 +11,13 @@ export function Task(id){
         "Su": 0
       });
 
-    const [totalAmount, setTotalAmount] = useState(0);
-
     const [deadLine, setDeadline] = useState("");
-
-    //starting day
-
-    function checkIfNumber(num){
-        const n = parseFloat(num);
-        return !isNaN(n);
-    }
 
     
     function onInpAmountChange(event, name){
-        const onlyOnWor = document.querySelector(".inpCheckboxSameOnWorkdays").checked;
-        const theSameEveryDay = document.querySelector(".inpCheckboxSameEveryDay").checked;
+        const myDiv = document.getElementById(id);
+        const onlyOnWor = myDiv.querySelector(".inpCheckboxSameOnWorkdays").checked;
+        const theSameEveryDay = myDiv.querySelector(".inpCheckboxSameEveryDay").checked;
         let di = amountPerDay;
         const val = event.target.value;
         const keys = Object.keys(di);
@@ -53,51 +44,12 @@ export function Task(id){
 
 
     function changeInputValues(){
-        const inps = document.getElementsByClassName("inpDayAmount");
+        const myDiv = document.getElementById(id);
+        const inps = myDiv.getElementsByClassName("inpDayAmount");
         for(let inp of inps){
             inp.value = amountPerDay[inp.placeholder];
         }
     }
-    
-
-    /*function changeInputFieldValue() {
-        const amountInputs = Array.from(document.getElementsByClassName("inpDayAmount"));
-        const checkOnlyOnWoorkdays = document.getElementsByClassName("inpCheckboxSameOnWorkdays")[0];
-        const checkEveryDayTheSame = document.getElementsByClassName("inpCheckboxSameEveryDay")[0];
-      
-        if (checkEveryDayTheSame.checked) {
-          let max = 0;
-          amountInputs.forEach(inp => {
-            if (inp.value !== "") {
-              if (inp.value > max) {
-                max = inp.value;
-              }
-            }
-          });
-      
-          amountInputs.forEach(inp => {
-            setAmountPerDay(prev => ({
-              ...prev,
-              [inp.placeholder]: max
-            }));
-          });
-        } else {
-          amountInputs.forEach(inp => {
-            setAmountPerDay(prev => ({
-              ...prev,
-              [inp.placeholder]: inp.value
-            }));
-          });
-        }
-      
-        if (checkOnlyOnWoorkdays.checked) {
-          setAmountPerDay(prev => ({
-            ...prev,
-            "Sa": 0,
-            "So": 0
-          }));
-        }
-      }*/
     
           
     function calculateDeadline() {
@@ -122,37 +74,33 @@ export function Task(id){
           if(index===7){
             index = 0
           }
-        }
-        alert(daysNeeded)
-      
+        }      
         let deadLineDate = new Date();
         deadLineDate.setDate(date.getDate() + daysNeeded);
         setDeadline(deadLineDate.toDateString());
     }
+
     const totalAmountId = "inpTotalAmount"+id;
     const deadLineId = "pDeadline"+id;
 
     return(
-        <div className="divTask">
-            <div id={id} className="divTask">
-                <input className="inpName" placeholder={"Name"}></input> 
-                <input className="inpAmount" placeholder={"Amount"} id={totalAmountId}></input>
-                <input className="inpCheckboxSameOnWorkdays" type="checkbox"></input> Only on work days 
-                <input className="inpCheckboxSameEveryDay" type="checkbox"></input> The same every day 
-                <br></br>
-                Amount per day<br></br>
-                <input className='inpDayAmount' placeholder="Mo" onChange={e => onInpAmountChange(e, "Mo")}></input> 
-                <input className='inpDayAmount' placeholder="Tu" onChange={e => onInpAmountChange(e, "Tu")}></input> 
-                <input className='inpDayAmount' placeholder="We" onChange={e => onInpAmountChange(e, "We")}></input> 
-                <input className='inpDayAmount' placeholder="Th" onChange={e => onInpAmountChange(e, "Th")}></input>
-                <input className='inpDayAmount' placeholder="Fr" onChange={e => onInpAmountChange(e, "Fr")}></input>
-                <input className='inpDayAmount' placeholder="Sa" onChange={e => onInpAmountChange(e, "Sa")}></input> 
-                <input className='inpDayAmount' placeholder="Su" onChange={e => onInpAmountChange(e, "So")}></input>
-                <br></br>
-                <p id={deadLineId} className='deadLine'>Deadline: {deadLine}</p>
-                <button onClick={calculateDeadline}>Calculate Deadline</button><br></br>
-                
-            </div>
-        </div>
+          <div id={id} className="divTask">
+              <input className="inpName" placeholder={"Name"}></input> 
+              <input className="inpAmount" placeholder={"Amount"} id={totalAmountId}></input>
+              <input className="inpCheckboxSameOnWorkdays" type="checkbox"></input> Only on work days 
+              <input className="inpCheckboxSameEveryDay" type="checkbox"></input> The same every day 
+              <br></br>
+              Amount per day<br></br>
+              <input className='inpDayAmount' placeholder="Mo" onChange={e => onInpAmountChange(e, "Mo")}></input> 
+              <input className='inpDayAmount' placeholder="Tu" onChange={e => onInpAmountChange(e, "Tu")}></input> 
+              <input className='inpDayAmount' placeholder="We" onChange={e => onInpAmountChange(e, "We")}></input> 
+              <input className='inpDayAmount' placeholder="Th" onChange={e => onInpAmountChange(e, "Th")}></input>
+              <input className='inpDayAmount' placeholder="Fr" onChange={e => onInpAmountChange(e, "Fr")}></input>
+              <input className='inpDayAmount' placeholder="Sa" onChange={e => onInpAmountChange(e, "Sa")}></input> 
+              <input className='inpDayAmount' placeholder="Su" onChange={e => onInpAmountChange(e, "So")}></input>
+              <br></br>
+              <p id={deadLineId} className='deadLine'>Deadline: {deadLine}</p>
+              <button onClick={calculateDeadline}>Calculate Deadline</button><br></br><br></br>  
+          </div>
     )
 }

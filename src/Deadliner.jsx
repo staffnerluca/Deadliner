@@ -9,7 +9,7 @@ export function Deadliner(){
     
     function addTask(){
         console.log("added");
-        setTaskList(prev => [...prev, <Task key={taskList.length} />]);
+        setTaskList(prev => [...prev, <Task key={taskList.length} id={taskList.length} />]);
         counter +=1;
     }
 
