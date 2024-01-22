@@ -2,6 +2,7 @@ import { useState } from "react";
 import {Task} from "./Task"
 import "./Deadliner.css"
 
+
 export function Deadliner(){
     const [taskList, setTaskList] = useState([])
     let counter = 0
@@ -35,11 +36,11 @@ export function Deadliner(){
     
 
     return (
-        <div className="container-fluid d-flex align-items-center justify-content-center vh-100">
+        <div className="centeredDiv">
           <div>
-            <h1>Deadliner</h1>
-            <button onClick={addTask}>+</button>
-            <button onClick={removeTask}>-</button>
+            <center><h1>Deadliner</h1></center>
+            <center><button onClick={addTask}>+</button>
+            <button onClick={removeTask}>-</button></center>
       
             {RenderTaskList()}
             <br></br>

@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Task } from "./Task";
 import { Deadliner } from "./Deadliner";
 import { Test } from "./Test";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   const AppRoutes = [

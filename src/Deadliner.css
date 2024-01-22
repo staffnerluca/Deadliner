@@ -1,10 +1,6 @@
-.container-fluid {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.centeredDiv{
+    display: grid;
+    place-items: center;
     height: 100vh;
-}
-
-.container-fluid > div{
-    text-align: center;
+    width: 100vw;
 }

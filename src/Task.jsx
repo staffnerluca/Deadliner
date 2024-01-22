@@ -16,34 +16,32 @@ export function Task({id}){
     
     function onInpAmountChange(event, name){
         const myDiv = document.getElementById(id);
-        const onlyOnWor = myDiv.querySelector(".inpCheckboxSameOnWorkdays").checked;
+        const onlyOnWork = myDiv.querySelector(".inpCheckboxSameOnWorkdays").checked;
         const theSameEveryDay = myDiv.querySelector(".inpCheckboxSameEveryDay").checked;
-        let di = amountPerDay;
+        let diAmount = amountPerDay;
         const val = event.target.value;
-        const keys = Object.keys(di);
-        console.log(keys)
+        const amountKeys = Object.keys(di);
         if(theSameEveryDay){
-            for(let key of keys){
-                di[key] = val;
+            for(let key of amountKeys){
+                diAmount[key] = val;
             }
         }
-        else if(onlyOnWor){
+        else if(onlyOnWork){
             if(name !=="Sa" && name !== "Su"){
                 for(let key of keys){
                     if(key !== "Sa" && key !== "Su"){
-                        di[key] = val;
-                        console.log(di)
+                        diAmount[key] = val;
                     }
                 }
             }
         }
         else{di[name] = val}
-        setAmountPerDay(di);
-        changeInputValues();
+        setAmountPerDay(diAmount);
+        actualiseInputValues();
     }
 
 
-    function changeInputValues(){
+    function actualiseInputValues(){
         const myDiv = document.getElementById(id);
         const inps = myDiv.getElementsByClassName("inpDayAmount");
         for(let inp of inps){
@@ -53,18 +51,17 @@ export function Task({id}){
     
           
     function calculateDeadline() {
-        let date = new Date();
-        let weekday = date.getDay();
+        let dateNow = new Date();
+        let weekday = dateNow.getDay();
 
         const inpTotalAmount = document.getElementById("inpTotalAmount"+id);
-        const amount = inpTotalAmount.value;
+        const totalAmount = inpTotalAmount.value;
         if (weekday === 0) {
           weekday = 7;
         }
       
         const amountsList = Object.values(amountPerDay);
-        let amountLeft = amount;
-        alert(amount)
+        let amountLeft = totalAmount;
         let index = weekday - 1;
         let daysNeeded = 0;
         while (amountLeft > 0) {
@@ -85,7 +82,7 @@ export function Task({id}){
 
     return(
           <div id={id} className="divTask">
-              <input className="inpName" placeholder={"Name"}></input> 
+              <input className="inpName" placeholder={"Name"}></input>
               <input className="inpAmount" placeholder={"Amount"} id={totalAmountId}></input>
               <input className="inpCheckboxSameOnWorkdays" type="checkbox"></input> Only on work days 
               <input className="inpCheckboxSameEveryDay" type="checkbox"></input> The same every day 
