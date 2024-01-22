@@ -31,7 +31,7 @@ export function Deadliner(){
 
     function calculateAllDeadlines(){
         //TODO not working jet
-        taskList.forEach(task => console.log(typeof task.calculateDeadline))
+        taskList.forEach(task => console.log(typeof task))
     }
     
 
@@ -44,7 +44,6 @@ export function Deadliner(){
       
             {RenderTaskList()}
             <br></br>
-            <center><button onClick={calculateAllDeadlines}>Calculate all deadlines</button></center>
           </div>
         </div>
       );
