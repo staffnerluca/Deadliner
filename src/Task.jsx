@@ -1,4 +1,4 @@
-import { useEffect, useState, useLayoutEffect, useRef } from 'react'
+import {useState } from 'react'
 
 export function Task({id}){
     const [amountPerDay, setAmountPerDay] = useState({
