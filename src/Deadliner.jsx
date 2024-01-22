@@ -26,15 +26,9 @@ export function Deadliner(){
                 {taskList}
             </div>
         )
-    }
+    }    
 
-
-    function calculateAllDeadlines(){
-        //TODO not working jet
-        taskList.forEach(task => console.log(typeof task))
-    }
     
-
     return (
         <div className="centeredDiv">
           <div>
